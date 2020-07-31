@@ -19,6 +19,10 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 //
+// Copyright (c) 2020 Driivz Vitalii Parovishnyk
+//
+// Added XIBLocalizable protocol to UITextField
+// Set key to accessibilityLabel
 
 import UIKit
 
@@ -43,6 +47,7 @@ extension UILabel: XIBLocalizable {
         get { return nil }
         set(key) {
             text = key?.localized
+            accessibilityLabel = key
         }
     }
 }
@@ -52,6 +57,7 @@ extension UIButton: XIBLocalizable {
         get { return nil }
         set(key) {
             setTitle(key?.localized, for: .normal)
+            accessibilityLabel = key
         }
     }
 }
@@ -61,6 +67,7 @@ extension UINavigationItem: XIBLocalizable {
         get { return nil }
         set(key) {
             title = key?.localized
+            accessibilityLabel = key
         }
     }
 }
@@ -70,6 +77,7 @@ extension UIBarItem: XIBLocalizable { // Localizes UIBarButtonItem and UITabBarI
         get { return nil }
         set(key) {
             title = key?.localized
+            accessibilityLabel = key
         }
     }
 }
@@ -86,12 +94,23 @@ extension UISegmentedControl: XIBMultiLocalizable {
             guard let keys = keys?.components(separatedBy: ","), !keys.isEmpty else { return }
             for (index, title) in keys.enumerated() {
                 setTitle(title.localized, forSegmentAt: index)
+                accessibilityLabel = title
             }
         }
     }
 }
 
-// MARK: Special protocol to localizaze UITextField's placeholder
+// MARK: Special protocol to localizaze UITextField
+extension UITextField: XIBLocalizable {
+    @IBInspectable public var xibLocKey: String? {
+        get { return nil }
+        set(key) {
+            text = key?.localized
+            accessibilityLabel = key
+        }
+    }
+}
+
 public protocol UITextFieldXIBLocalizable {
     var xibPlaceholderLocKey: String? { get set }
 }
