@@ -123,3 +123,14 @@ extension UITextField: UITextFieldXIBLocalizable {
         }
     }
 }
+
+// MARK: Special protocol to localizaze UITextView
+extension UITextView: XIBLocalizable {
+    @IBInspectable public var xibLocKey: String? {
+        get { return nil }
+        set(key) {
+            text = key?.localized
+            accessibilityLabel = key
+        }
+    }
+}
